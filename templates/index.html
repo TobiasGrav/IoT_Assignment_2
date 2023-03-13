@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <title>FlaskBlog</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.6.0/math.js"></script>
+    <h1>Temperature registered last hour</h1>
+    <p style="size: 12;">
+        Temperature reading by a BMP280 sensor
+        utilizing a MQTT broker to communicate
+    </p>
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    
+    <script>
+        var xValues = {{ xGraphData | tojson }};
+        var yValues = {{ yGraphData }};
+        var bufferMax = math.max(yValues) + 0.5;
+        var bufferMin = math.min(yValues) - 0.5;
+        new Chart("myChart", {
+            type: "line",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: "Temperature (°C)",
+                    fill: false,
+                    pointRadius: 5,
+                    borderColor: "rgba(255,0,0,0.5)",
+                    data: yValues
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            suggestedMin: bufferMin,
+                            suggestedMax: bufferMax,
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+</html>

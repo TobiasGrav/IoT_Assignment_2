@@ -1,0 +1,17 @@
+body {
+    background-color: #111149;
+    color:#ceceff;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div {
+    width: auto;
+    height: auto;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+chart {
+    background-color: rgb(255, 0, 0);
+}
